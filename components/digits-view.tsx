@@ -9,7 +9,6 @@ import { DigitStatsBar } from './digit-stats-bar';
 import { TradeControls } from './trade-controls';
 import { TradeTypeChips } from '@/components/custom/trade-type-chips';
 import { SymbolSelector } from '@/components/custom/symbol-selector';
-import { ThemeToggle } from '@/components/custom/theme-toggle';
 import type {
   AuthState,
   DerivAccount,
@@ -116,8 +115,8 @@ export function DigitsView({
 }: DigitsViewProps) {
   if (error) {
     return (
-      <main className="flex flex-col bg-background items-center justify-center px-4 min-h-dvh">
-        <Card className="max-w-md w-full">
+      <main className="terminal-bg flex min-h-dvh flex-col items-center justify-center bg-background px-4">
+        <Card className="glass w-full max-w-md">
           <CardHeader>
             <CardTitle className="text-destructive">Connection Error</CardTitle>
           </CardHeader>
@@ -130,7 +129,7 @@ export function DigitsView({
   }
 
   return (
-    <main className="flex flex-col bg-background max-lg:h-dvh max-lg:overflow-y-auto lg:overflow-visible">
+    <main className="terminal-bg flex flex-col bg-background max-lg:h-dvh max-lg:overflow-y-auto lg:overflow-visible">
       <Header
         authState={authState}
         accounts={accounts}
@@ -141,13 +140,13 @@ export function DigitsView({
         onSwitchAccount={onSwitchAccount}
         logoSrc={logoSrc}
         appName={appName}
-        actions={<ThemeToggle />}
+        isConnected={isConnected}
       />
-      {/* Spacer to push content below fixed header — taller when authenticated (account bar visible) */}
-      <div className={authState === 'authenticated' ? 'h-[76px] shrink-0' : 'h-[66px] shrink-0'} />
+      {/* Spacer to push content below the fixed header */}
+      <div className="h-[72px] shrink-0" />
 
       {/* Scrollable content area — sits between header and sticky buy bar on mobile */}
-      <div className="flex w-full max-w-7xl mx-auto flex-col px-3 py-2 sm:px-4 sm:py-4 gap-2 sm:gap-3 lg:flex-none lg:overflow-visible pb-10">
+      <div className="mx-auto flex w-full max-w-7xl flex-none flex-col gap-3 px-3 py-3 pb-10 sm:px-4 sm:py-4 lg:overflow-visible">
         {isLoading ? (
           <>
             {/* Trade type chips skeleton */}
@@ -157,20 +156,22 @@ export function DigitsView({
               <Skeleton className="h-8 w-24 rounded-full" />
             </div>
             {/* Main card skeleton */}
-            <Skeleton className="w-full h-[420px] rounded-xl" />
+            <Skeleton className="h-[420px] w-full rounded-2xl" />
           </>
         ) : (
           <>
-            <div className="shrink-0 overflow-x-auto pb-0.5 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
-              <TradeTypeChips
-                value={tradeType}
-                options={DIGIT_TRADE_TYPE_OPTIONS}
-                onValueChange={setTradeType}
-              />
+            <div className="flex items-center justify-between gap-3">
+              <div className="min-w-0 overflow-x-auto pb-0.5 [-webkit-overflow-scrolling:touch] [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
+                <TradeTypeChips
+                  value={tradeType}
+                  options={DIGIT_TRADE_TYPE_OPTIONS}
+                  onValueChange={setTradeType}
+                />
+              </div>
             </div>
 
-            <Card className="shrink-0 border shadow-sm mb-12">
-              <CardContent className="flex flex-col p-3 pt-3 sm:p-6 sm:pt-4 pb-2 sm:pb-6">
+            <Card className="glass mb-12 shrink-0 rounded-2xl">
+              <CardContent className="flex flex-col p-3 pb-2 pt-3 sm:p-6 sm:pb-6 sm:pt-4">
                 <div
                   className={`lg:grid lg:overflow-visible ${tradeType !== 'even-odd' ? 'lg:grid-cols-3' : 'lg:grid-cols-2'}`}
                 >
@@ -181,7 +182,7 @@ export function DigitsView({
                       activeSymbol={activeSymbol}
                       onSymbolChange={selectSymbol}
                     />
-                    <div className="flex items-center justify-center min-h-24 sm:min-h-32 lg:flex-1">
+                    <div className="flex min-h-24 items-center justify-center sm:min-h-32 lg:flex-1">
                       <CurrentTickDisplay
                         tick={currentTick}
                         lastDigit={lastDigit}
@@ -192,10 +193,10 @@ export function DigitsView({
                   </div>
 
                   {/* Columns 2+3 wrapper: stacked on mobile, transparent on desktop */}
-                  <div className="max-lg:border-t max-lg:divide-y divide-border lg:contents">
+                  <div className="divide-y divide-border max-lg:border-t lg:contents">
                     {/* Column 2: Digit stats — hidden for Even/Odd */}
                     {tradeType !== 'even-odd' && (
-                      <div className="py-4 sm:py-6 lg:py-0 lg:px-6 lg:border-l lg:border-border">
+                      <div className="py-4 sm:py-6 lg:border-l lg:border-border lg:px-6 lg:py-0">
                         <DigitStatsBar
                           digitStats={digitStats}
                           selectedDigit={selectedDigit}
@@ -205,7 +206,7 @@ export function DigitsView({
                     )}
 
                     {/* Column 3: Trade controls */}
-                    <div className="pt-4 sm:pt-6 lg:pt-0 lg:pl-6 lg:border-l lg:border-border">
+                    <div className="pt-4 sm:pt-6 lg:border-l lg:border-border lg:pl-6 lg:pt-0">
                       <TradeControls
                         tradeType={tradeType}
                         contractMode={contractMode}
@@ -236,7 +237,7 @@ export function DigitsView({
       </div>
 
       {/* Fixed footer */}
-      <div className="fixed bottom-0 left-0 right-0 py-2 text-center bg-background/80 backdrop-blur-sm">
+      <div className="fixed bottom-0 left-0 right-0 bg-background/80 py-2 text-center backdrop-blur-sm">
         <Footer />
       </div>
     </main>

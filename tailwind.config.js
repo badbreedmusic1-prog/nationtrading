@@ -465,6 +465,13 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      fontFamily: {
+        display: ["var(--font-display)", "ui-sans-serif", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
+      },
+      boxShadow: {
+        glow: "0 0 0 1px rgb(var(--primary) / 0.35), 0 0 28px -6px rgb(var(--primary) / 0.55)",
+      },
       keyframes: {
         "accordion-down": {
           from: { height: "0" },
@@ -474,10 +481,42 @@ module.exports = {
           from: { height: "var(--radix-accordion-content-height)" },
           to: { height: "0" },
         },
+        "scan-y": {
+          "0%": { transform: "translateY(-100%)", opacity: "0" },
+          "10%": { opacity: "1" },
+          "90%": { opacity: "1" },
+          "100%": { transform: "translateY(1000%)", opacity: "0" },
+        },
+        "pulse-ring": {
+          "0%": { transform: "scale(0.8)", opacity: "0.7" },
+          "70%": { transform: "scale(2.2)", opacity: "0" },
+          "100%": { transform: "scale(2.2)", opacity: "0" },
+        },
+        "ticker-in": {
+          "0%": { transform: "translateY(35%)", opacity: "0", filter: "blur(4px)" },
+          "100%": { transform: "translateY(0)", opacity: "1", filter: "blur(0)" },
+        },
+        shimmer: {
+          "0%": { backgroundPosition: "-200% 0" },
+          "100%": { backgroundPosition: "200% 0" },
+        },
+        "fade-up": {
+          "0%": { transform: "translateY(12px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+        "spin-slow": {
+          to: { transform: "rotate(360deg)" },
+        },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
+        "scan-y": "scan-y 2.4s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+        "pulse-ring": "pulse-ring 1.8s cubic-bezier(0.4, 0, 0.2, 1) infinite",
+        "ticker-in": "ticker-in 0.28s cubic-bezier(0.22, 1, 0.36, 1)",
+        shimmer: "shimmer 2.5s linear infinite",
+        "fade-up": "fade-up 0.5s cubic-bezier(0.22, 1, 0.36, 1) both",
+        "spin-slow": "spin-slow 8s linear infinite",
       },
     },
   },

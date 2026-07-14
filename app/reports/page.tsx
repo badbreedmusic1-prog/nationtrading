@@ -6,7 +6,6 @@ import { useDigitsTrading } from '../../hooks/use-digits-trading';
 import { useDerivWSContext } from '@/components/custom/deriv-ws-provider';
 import { useLogoSrc } from '@/components/custom/logo-src-provider';
 import { Header } from '@/components/custom/header';
-import { ThemeToggle } from '@/components/custom/theme-toggle';
 import { Footer } from '@/components/custom/footer';
 import Link from 'next/link';
 import { PositionsTable } from '@/components/custom/positions-table';
@@ -42,7 +41,7 @@ export default function ReportsPage() {
   }
 
   return (
-    <main className="flex flex-col bg-background max-lg:h-dvh max-lg:overflow-y-auto lg:min-h-dvh">
+    <main className="terminal-bg flex flex-col bg-background max-lg:h-dvh max-lg:overflow-y-auto lg:min-h-dvh">
       <Header
         authState={authState}
         accounts={accounts}
@@ -52,16 +51,16 @@ export default function ReportsPage() {
         onLogout={logout}
         onSwitchAccount={switchAccount}
         logoSrc={logoSrc}
-        actions={<ThemeToggle />}
+        isConnected={isConnected}
       />
 
-      {/* Spacer to push content below fixed header — authenticated users have a taller header */}
-      <div className="h-[76px] shrink-0" />
+      {/* Spacer to push content below the fixed header */}
+      <div className="h-[72px] shrink-0" />
 
-      <div className="flex-1 w-full max-w-7xl mx-auto px-3 py-4 sm:px-4 sm:py-6 pb-14">
-        <Link href="/" className="inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground mb-4">
+      <div className="mx-auto w-full max-w-7xl flex-1 px-3 py-4 pb-14 sm:px-4 sm:py-6">
+        <Link href="/" className="mb-4 inline-flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground">
           <span className="text-base leading-none">←</span>
-          <span>Back</span>
+          <span>Back to terminal</span>
         </Link>
         <PositionsTable
           openPositions={trading.openPositions.filter(p => Object.keys(DIGIT_CONTRACT_LABELS).includes(p.contract_type))}
