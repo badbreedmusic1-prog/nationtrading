@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { buildFaviconUri } from '@/lib/build-favicon-uri';
 import { getLogoSrc } from '@/lib/get-logo-src';
-import { inter, FONT_CLASS_MAP } from '@/lib/fonts';
+import { inter, FONT_CLASS_MAP, rajdhani, jetbrainsMono } from '@/lib/fonts';
 import { TemplateLayout } from '@/components/custom/template-layout';
 import { LogoSrcProvider } from '@/components/custom/logo-src-provider';
 import '@/app/globals.css';
@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className="h-full lg:h-auto" suppressHydrationWarning>
       <body
-        className={`${fontClass} bg-background flex min-h-dvh flex-col overflow-hidden max-lg:h-dvh max-lg:overflow-hidden lg:block lg:h-auto lg:min-h-screen lg:overflow-x-hidden lg:overflow-y-auto`}
+        className={`${fontClass} ${rajdhani.variable} ${jetbrainsMono.variable} bg-background flex min-h-dvh flex-col overflow-hidden max-lg:h-dvh max-lg:overflow-hidden lg:block lg:h-auto lg:min-h-screen lg:overflow-x-hidden lg:overflow-y-auto`}
       >
         <TemplateLayout>
           <LogoSrcProvider logoSrc={logoSrc}>{children}</LogoSrcProvider>

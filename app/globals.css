@@ -123,7 +123,105 @@
     --button-blackwhite-foreground: 0 0 0;
     --checkmark-foreground: 24 28 37;
     --checkmark: 255 255 255;
+    --brand: 16 201 150;
+    --brand-2: 20 184 166;
+    --grid: 148 163 178;
   }
+}
+
+/* ============================================================
+   1RB AI — premium terminal theme palettes
+   Each theme is applied as a class alongside `dark` (via next-themes
+   value mapping in providers.tsx), so all `dark:` variants keep working
+   while these blocks retint the brand-defining tokens. Defined after
+   `.dark` so equal-specificity selectors win on source order.
+   --brand / --brand-2 drive gradients & glows; --grid draws the
+   terminal backdrop lines.
+   ============================================================ */
+
+/* 1. 1RB Black Carbon — signature emerald on carbon (default) */
+.theme-carbon {
+  --background: 10 12 15;
+  --card: 17 20 26;
+  --popover: 17 20 26;
+  --accent: 20 26 32;
+  --muted: 26 31 39;
+  --border: 255 255 255 / 0.08;
+  --muted-foreground: 148 163 178;
+  --primary: 16 201 150;
+  --primary-foreground: 3 10 8;
+  --ring: 16 201 150;
+  --brand: 16 201 150;
+  --brand-2: 20 184 166;
+  --grid: 148 163 178;
+}
+
+/* 2. Neon Cyber AI — cyan/magenta neon on deep ink */
+.theme-cyber {
+  --background: 7 9 16;
+  --card: 13 17 28;
+  --popover: 13 17 28;
+  --accent: 18 24 40;
+  --muted: 22 28 46;
+  --border: 56 189 248 / 0.16;
+  --muted-foreground: 148 163 200;
+  --primary: 34 211 238;
+  --primary-foreground: 4 10 14;
+  --ring: 34 211 238;
+  --brand: 34 211 238;
+  --brand-2: 217 70 239;
+  --grid: 56 189 248;
+}
+
+/* 3. Professional Trader Blue — azure on midnight navy */
+.theme-trader {
+  --background: 9 14 25;
+  --card: 15 22 38;
+  --popover: 15 22 38;
+  --accent: 20 30 52;
+  --muted: 24 34 56;
+  --border: 96 165 250 / 0.14;
+  --muted-foreground: 148 168 200;
+  --primary: 56 132 246;
+  --primary-foreground: 240 247 255;
+  --ring: 56 132 246;
+  --brand: 56 132 246;
+  --brand-2: 45 212 191;
+  --grid: 96 165 250;
+}
+
+/* 4. Luxury Gold — champagne gold on warm near-black */
+.theme-gold {
+  --background: 16 14 10;
+  --card: 24 21 15;
+  --popover: 24 21 15;
+  --accent: 32 27 18;
+  --muted: 38 32 22;
+  --border: 212 175 55 / 0.18;
+  --muted-foreground: 176 164 140;
+  --primary: 212 175 55;
+  --primary-foreground: 26 20 6;
+  --ring: 212 175 55;
+  --brand: 212 175 55;
+  --brand-2: 234 179 8;
+  --grid: 176 150 90;
+}
+
+/* 5. Midnight Purple — violet on deep indigo */
+.theme-purple {
+  --background: 14 11 24;
+  --card: 21 17 36;
+  --popover: 21 17 36;
+  --accent: 28 22 48;
+  --muted: 33 26 56;
+  --border: 167 139 250 / 0.16;
+  --muted-foreground: 168 156 200;
+  --primary: 149 108 250;
+  --primary-foreground: 245 242 255;
+  --ring: 149 108 250;
+  --brand: 149 108 250;
+  --brand-2: 217 70 239;
+  --grid: 167 139 250;
 }
 
 @layer base {

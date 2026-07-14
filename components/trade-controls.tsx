@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { toast } from 'sonner';
 import Link from 'next/link';
+import { LineChart, ListChecks } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -112,20 +113,24 @@ export function TradeControls({
   const modeOptions = CONTRACT_MODE_OPTIONS[tradeType];
 
   return (
-    <div className="space-y-2 sm:space-y-4">
+    <div className="space-y-3 sm:space-y-4">
+      <span className="font-display text-[11px] font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+        Trade control
+      </span>
+
       <ToggleGroup
         type="single"
         value={contractMode}
-        onValueChange={value => {
+        onValueChange={(value) => {
           if (value) onContractModeChange(value as ContractMode);
         }}
-        className="w-full gap-0 rounded-full bg-muted p-1"
+        className="w-full gap-1 rounded-full border border-border bg-muted/40 p-1"
       >
-        {modeOptions.map(opt => (
+        {modeOptions.map((opt) => (
           <ToggleGroupItem
             key={opt.value}
             value={opt.value}
-            className="flex-1 rounded-full text-sm font-medium text-muted-foreground data-[state=on]:bg-background data-[state=on]:text-primary data-[state=on]:font-bold data-[state=on]:shadow-sm hover:text-foreground"
+            className="flex-1 rounded-full text-sm font-medium text-muted-foreground transition-all hover:text-foreground data-[state=on]:bg-primary data-[state=on]:font-bold data-[state=on]:text-primary-foreground data-[state=on]:shadow-glow"
           >
             {opt.label}
           </ToggleGroupItem>
@@ -134,31 +139,32 @@ export function TradeControls({
 
       <div className="grid grid-cols-2 gap-3">
         <div className="space-y-1.5">
-          <Label htmlFor="stake" className="text-xs text-muted-foreground">
+          <Label htmlFor="stake" className="text-[11px] uppercase tracking-wide text-muted-foreground">
             Stake
           </Label>
           <Input
             id="stake"
             type="number"
             value={stake}
-            onChange={e => onStakeChange(e.target.value)}
-            onKeyDown={e => {
+            onChange={(e) => onStakeChange(e.target.value)}
+            onKeyDown={(e) => {
               if (['e', 'E', '+', '-'].includes(e.key)) e.preventDefault();
             }}
             min={0}
             step="0.01"
             labelRight="USD"
+            className="tnum"
           />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="duration" className="text-xs text-muted-foreground">
-            Duration
+          <Label htmlFor="duration" className="text-[11px] uppercase tracking-wide text-muted-foreground">
+            Ticks
           </Label>
           <Input
             id="duration"
             type="number"
             value={duration}
-            onChange={e => {
+            onChange={(e) => {
               const val = parseInt(e.target.value, 10);
               if (!isNaN(val)) onDurationChange(val);
             }}
@@ -166,31 +172,32 @@ export function TradeControls({
             max={durationLimits.max}
             step={1}
             labelRight="Ticks"
+            className="tnum"
           />
         </div>
       </div>
 
-      <div className="rounded-lg border border-border p-2 sm:p-3 bg-muted/20 space-y-1.5 sm:space-y-2">
-        <p className="text-[11px] sm:text-xs text-muted-foreground mb-0 sm:mb-1">Prediction</p>
-        <p className="text-xs sm:text-sm font-medium">
-          Last digit of the price will{' '}
-          <span className="text-primary font-bold">{getPredictionText(contractMode)}</span>
+      <div className="space-y-2 rounded-xl border border-border bg-card/50 p-3 backdrop-blur">
+        <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Prediction</p>
+        <p className="text-sm font-medium">
+          Last digit will{' '}
+          <span className="font-bold text-primary">{getPredictionText(contractMode)}</span>
           {showDigitInPrediction(contractMode) && (
             <>
               {' '}
-              <span className="inline-flex w-5 h-5 rounded-full bg-primary text-primary-foreground items-center justify-center text-xs font-bold">
+              <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-gradient-to-br from-[rgb(var(--brand))] to-[rgb(var(--brand-2))] font-mono text-xs font-bold text-[rgb(var(--primary-foreground))]">
                 {selectedDigit}
               </span>
             </>
           )}
         </p>
         {(proposal || isProposalLoading) && (
-          <div className="flex items-center justify-between pt-1 border-t border-border">
-            <span className="text-xs text-muted-foreground">Payout</span>
+          <div className="flex items-center justify-between border-t border-border pt-2">
+            <span className="text-xs text-muted-foreground">Potential payout</span>
             {isProposalLoading ? (
               <Skeleton className="h-4 w-24" />
             ) : (
-              <span className="text-sm font-bold text-foreground">
+              <span className="tnum text-sm font-bold text-primary">
                 {proposal!.payout.toFixed(2)} USD
               </span>
             )}
@@ -201,27 +208,42 @@ export function TradeControls({
       {/* Buy button — fixed above footer on mobile, inline on desktop */}
       <div className="max-lg:fixed max-lg:bottom-[calc(env(safe-area-inset-bottom)+2.5rem)] max-lg:left-3 max-lg:right-3 lg:static">
         <Button
-          className="w-full h-10 rounded-full px-6 sm:h-11 sm:px-8"
+          className="h-11 w-full rounded-full bg-gradient-to-r from-[rgb(var(--brand))] to-[rgb(var(--brand-2))] px-8 font-display text-base font-bold tracking-wide text-[rgb(var(--primary-foreground))] shadow-glow transition-transform hover:brightness-110 active:scale-[0.99] disabled:opacity-50 disabled:shadow-none"
           disabled={!isConnected || !proposal || isBuying}
           onClick={onBuy}
         >
           {isBuying
-            ? 'Purchasing...'
+            ? 'Purchasing…'
             : proposal
-              ? `Buy @ ${proposal.askPrice.toFixed(2)} USD`
-              : 'Buy Contract'}
+              ? `Buy · ${proposal.askPrice.toFixed(2)} USD`
+              : 'Buy contract'}
         </Button>
       </div>
 
-      <Button asChild variant="ghost" className="w-full text-sm text-muted-foreground hover:text-foreground">
-        <Link href="/analyser">Open prediction analyser →</Link>
-      </Button>
-
-      {isAuthenticated && (
-        <Button asChild variant="ghost" className="w-full text-sm text-muted-foreground hover:text-foreground">
-          <Link href="/reports">View your positions →</Link>
+      <div className="flex flex-col gap-1">
+        <Button
+          asChild
+          variant="ghost"
+          className="w-full justify-start gap-2 text-sm text-muted-foreground hover:text-foreground"
+        >
+          <Link href="/analyser">
+            <LineChart className="h-4 w-4" />
+            Open AI analyzer
+          </Link>
         </Button>
-      )}
+        {isAuthenticated && (
+          <Button
+            asChild
+            variant="ghost"
+            className="w-full justify-start gap-2 text-sm text-muted-foreground hover:text-foreground"
+          >
+            <Link href="/reports">
+              <ListChecks className="h-4 w-4" />
+              View your positions
+            </Link>
+          </Button>
+        )}
+      </div>
     </div>
   );
 }

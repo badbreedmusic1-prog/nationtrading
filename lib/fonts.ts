@@ -9,7 +9,30 @@ import {
   Montserrat,
   Raleway,
   Source_Sans_3,
+  Rajdhani,
+  JetBrains_Mono,
 } from 'next/font/google';
+
+/**
+ * 1RB AI terminal typography.
+ *
+ * Rajdhani is a squared, semi-condensed display face that reads like a
+ * professional trading terminal — used for the brand mark, headings and
+ * stat labels via the `--font-display` CSS variable / Tailwind `font-display`.
+ * JetBrains Mono renders all numeric/tick data (`--font-mono` / `font-mono`)
+ * so prices align on a fixed grid. Both are exposed as CSS variables and wired
+ * onto <body> in app/layout.tsx.
+ */
+export const rajdhani = Rajdhani({
+  subsets: ['latin'],
+  weight: ['500', '600', '700'],
+  variable: '--font-display',
+});
+
+export const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-mono',
+});
 
 /**
  * Inter is the default font for all template apps.
